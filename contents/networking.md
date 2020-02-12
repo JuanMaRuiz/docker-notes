@@ -34,7 +34,7 @@ docker network ls
 
 Deberías ver algo parecido a esto:
 
-![default-docker-networks](default-docker-networks.png)
+![default-docker-networks](./../images/default-docker-networks.png)
 
 Estas tres 3 las crea Docker por defecto. Y será la red `bridge` la que se utilizará por defecto por todos los contenedores.
 
@@ -76,7 +76,7 @@ docker run -d -it --name contenedor2 alpine /bin/sh
 
 Comprobamos que los contenedores están levantados
 
-![alpine-network-example-1](alpine-network-example-1.png)
+![alpine-network-example-1](./../images/alpine-network-example-1.png)
 
 Inspeccionamos de nuevo la red `bridge`:
 
