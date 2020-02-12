@@ -13,7 +13,7 @@ Qué vas a encontrar en este proyecto:
 ## TODO List
 
 - [x] Contenedores
-- [] Redes Networking
+- [] Redes Networking - On going ...
 - [] Docker Compose
 - [] Docker Machine
 - [] Docker Swarm
