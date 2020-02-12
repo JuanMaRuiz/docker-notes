@@ -11,7 +11,7 @@ Los namespaces aíslan el entorno operativo (filesystem, árbol de procesos, ...
     - Docker Host (API)
     - Docker CLI
 
-![docker-engine](/docker-engine.png)
+![docker-engine](images/docker-engine.png)
 
 * **Docker image.-** Se podría decir que es la plantilla para la construcción de un contenedor. Es un componente estático que únicamente contiene un SO base y el conjunto de componentes que aportarán funcionalidad.
 * **Docker container.-** Es la instancia de una imagen
@@ -152,7 +152,7 @@ $ docker volume ls
 
 Deberías ver algo parecido a esto:
 
-![docker-volume-ls](docker-volume-ls.png)
+![docker-volume-ls](images/docker-volume-ls.png)
 
 > Si al lanzar el comando `docker volume ls` observaras un sin fin de volúmenes no te asustes, Docker crea volúmenes temporales al construir los contenedores. Para borrar dichos volúmenes basta con que lances el comando `docker volume prune` y confirmar la acción.
 
@@ -186,7 +186,7 @@ Con este comando lo que estamos diciendo es que queremos ejecutar `exec` de mane
 
 Debería aparece algo parecido a:
 
-![accediendo-contenedor-mysql-con-pass](accediendo-contenedor-mysql-con-pass.png)
+![accediendo-contenedor-mysql-con-pass](images/accediendo-contenedor-mysql-con-pass.png)
 
 Una vez dentro del contenedor comprobamos las bases de datos existentes dentro del mismo:
 
@@ -194,11 +194,11 @@ Una vez dentro del contenedor comprobamos las bases de datos existentes dentro d
 show databases;
 ```
 
-![databases inside container](container-db-1.png)
+![databases inside container](images/container-db-1.png)
 
 Vamos a crear una nueva base de datos, para ello ejecutamos el comando `CREATE DATABASE [nombreDataBase];` Una vez creada volvemos a listar las bases de datos y debería aparece la que acabamos de crear:
 
-![Database list](db-list-with-new-db.png)
+![Database list](images/db-list-with-new-db.png)
 
 Una vez creada la base de datos paramos y eliminamos el contenedor `docker stop [my-volume-name]` y `docker rm [my-volume-name]`.
 
@@ -222,7 +222,7 @@ Y verificamos las bases de datos que contiene:
 show databases;
 ```
 
-![Database list](db-list-with-new-db.png)
+![Database list](images/db-list-with-new-db.png)
 
 Deberíamos ver la bbdd creada anteriormente (cuando creamos el primer contenedor).
 
@@ -270,17 +270,17 @@ Con este comando creamos un nuevo contenedor `dbstore` partiendo de una máquina
 
 Una vez lanzado el contenedor, comprobamos que sigue corriendo `docker ps`. Deberías ver algo parecido a esto 
 
-![backup-dbstore](backup-dbstore.png)
+![backup-dbstore](images/backup-dbstore.png)
 
 A accedemos al contenedor `docker exec -it dbstore /bin/bash`
 
 Una vez dentro podemos ver que se ha creado la carpeta `dbstore` 
 
-![dbdata-folder-in-container](dbdata-folder-in-container.png)
+![dbdata-folder-in-container](images/dbdata-folder-in-container.png)
 
 Accedemos a ella y creamos un fichero cualquiera, en nuestro caso `foo.txt`
 
-![fichero-dbdata](fichero-dbdata.png)
+![fichero-dbdata](images/fichero-dbdata.png)
 
 Con esto hemos preparado el volumen del que queremos hacer el respaldo.
 
@@ -306,7 +306,7 @@ docker run --rm --volumes-from dbstore2 -v $(pwd):/backup ubuntu bash -c "cd /db
 
 Finalmente nos metemos dentro de `dbstore2` y confirmamos que existe un directorio `/dbdata` con un fichero `foo.txt`.
 
-![db-store2-with-backup](db-store2-with-backup.png)
+![db-store2-with-backup](images/db-store2-with-backup.png)
 
 #### Eliminación de volúmenes
 
@@ -348,7 +348,7 @@ docker network ls
 
 Deberías ver algo parecido a esto:
 
-![default-docker-networks](default-docker-networks.png)
+![default-docker-networks](images/default-docker-networks.png)
 
 Estas tres 3 las crea Docker por defecto. Y será la red `bridge` la que se utilizará por defecto por todos los contenedores.
 
@@ -390,7 +390,7 @@ docker run -d -it --name contenedor2 alpine /bin/sh
 
 Comprobamos que los contenedores están levantados
 
-![alpine-network-example-1](alpine-network-example-1.png)
+![alpine-network-example-1](images/alpine-network-example-1.png)
 
 Inspeccionamos de nuevo la red `bridge`:
 
