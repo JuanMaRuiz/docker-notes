@@ -1,13 +1,18 @@
 ## Volúmenes
 
-Los contenedores Docker son capaces de trabajar con almacenamiento alternativo. Esto es útil cuando se quieren persistir datos en disco como una los de una base de datos.
+Los volúmenes son el mecanismo preferido para la persistencia de datos, por ejemplo cuando se quieren persistir datos en disco como los de una base de datos.
 
-Docker nos permite manejar este almacenamiento de dos maneras:
+Los volúmenes representan una mejor opción a la persistencia de datos en una capa de un contenedor por varias razones:
 
-* Utilizando los volúmenes.
-* Utilizando contenedores como volúmenes.
+* No incrementan el tamaño del contenedor.
+* No dependen del ciclo de vida del contenedor. Es decir, si el contenedor es destruido los datos almacenados en el volumen no serán destruidos.
 
-Estos volúmenes se utilizan para almacenar y compartir datos (información) entre el host y el contenedor de manera independiente a la vida del contenedor.
+Para almacenar datos Docker nos permite:
+
+* Utilizar volúmenes.
+* Utilizar contenedores como volúmenes.
+
+Como hemos dicho anteriormente volúmenes se utilizan para almacenar y compartir datos (información) entre el host y el contenedor de manera independiente a la vida del contenedor.
 
 Además éstos, los volúmenes, nos facilitan el intercambio de datos entre contenedores, o, que 2 o más contenedores, puedan utilizar la misma fuente de datos.
 
@@ -50,7 +55,7 @@ Los volúmenes, al igual que los contenedores y las imágenes, pueden inspeccion
 
 Se puede realizar la creación de un volumen de manera manual y posteriormente (al hacer el run del contenedor) asociarlo a un directorio dentro del contenedor. 
 
-Con el fin de comprobar cómo funcionan los volúmenes vamos a realizar los siguiente:
+Con el fin de comprobar cómo funcionan los volúmenes vamos a realizar lo siguiente:
 
 * Creamos un volumen que montaremos (o asociaremos) al contenedor.
 * Nos meteremos dentro del contenedor y crearemos una nueva base de datos.
@@ -134,7 +139,23 @@ Una vez parado eliminamos el volumen creado también en el ejemplo anterior
 docker volume rm data
 ```
 
-Para asociarle un volumen a un contenedor en el momento de levantarlo debemos pasarle el flag `-v`. El valor que recibe el parámetro es el nombre del volumen y el nombre del directorio en el contenedor separado por dos puntos `docker run -it --name contenedor2 -v vol1:/data ubuntu bash`.
+Para asociarle un volumen a un contenedor en el momento de levantarlo existen dos flags u opciones: `-v` o `--volume` y `-m` o `--mount`.
+
+Aunque con ambas opciones conseguiremos lo mismo es preferible utilizar `-m` ya que es mucho más explícita y verbosa. Además, si necesitas especificar un driver para el volumen o si vas a usar un volumen con servicios deberás utizar `-m` ya que `-v` no lo soporta.
+
+La gran diferencia entre `-v` y `-m` es que `-v` combina todas las opciones en un único campo separadas por `:`. Todos los valores deben estar en el orden correcto y el valor a poner en cada uno de los campos no es demasiado obvio. `-m`, sin embargo, es mucho más explícito ya que identifica cada campo con su propia clave y los campos están separados por comas.
+
+Con `--mount` veríamos algo parecido a los siguiente:
+
+```bash
+--mount 'type=volume,src=<VOLUME_NAME>,dst=<CONTAINER_PATH>,volume-driver=local'
+```
+
+En el caso de `-v` tendríamos algo así:
+
+```bash
+docker run -it --name contenedor2 -v vol1:/data ubuntu bash
+```
 
 #### Añadir volumen en el Dockerfile
 
@@ -202,4 +223,4 @@ Finalmente nos metemos dentro de `dbstore2` y confirmamos que existe un director
 
 Al igual que creamos volúmenes estos puenden ser eliminados. Para ello sólo tendrías que ejecutar el comando `docker volume rm [nombre-volumen]`.
 
-[ 👉 Siguente - Redes (Networking)](networking.md)
+👉 [Siguente - Redes (Networking)](networking.md)
