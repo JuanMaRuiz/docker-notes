@@ -202,4 +202,4 @@ Finalmente nos metemos dentro de `dbstore2` y confirmamos que existe un director
 
 Al igual que creamos volúmenes estos puenden ser eliminados. Para ello sólo tendrías que ejecutar el comando `docker volume rm [nombre-volumen]`.
 
-[ 👉 Siguente - Redes (Networking)](networking.md)
+👉 [ Siguente - Redes (Networking)](networking.md) | 📖[Volver al índice](../README.md)
