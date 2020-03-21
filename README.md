@@ -10,11 +10,6 @@ Qué vas a encontrar en este proyecto:
 * [Docker Machine](contents/docker-machine.md)
 * [Docker Swarm](contents/docker-swarm.md)
 
-## TODO List
+## Project status
 
-- [x] Contenedores
-- [] Redes Networking - On going ...
-- [] Docker Compose
-- [] Docker Machine
-- [] Docker Swarm
-- [] English version
+You can follow the project status [here](https://github.com/JuanMaRuiz/docker-notes/projects/1)
