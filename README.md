@@ -16,6 +16,8 @@ Qué vas a encontrar en este proyecto:
   
 ## [Volúmenes](contents/volumes.md)
 
+En esta sección se explicará que son los volúmenes, cómo crearlos, cómo definirnos en el `Dockerfile` cómo gestionarlos, la creación de un volumen en el momento de la creación de un contenedor, ...
+
 ## [Redes (Networking)](contents/networking.md)
 ## [Docker Compose](contents/docker-compose.md)
 ## [Docker Machine](contents/docker-machine.md)
@@ -23,4 +25,4 @@ Qué vas a encontrar en este proyecto:
 
 ## Project status
 
-You can follow the project status [here](https://github.com/JuanMaRuiz/docker-notes/projects/1)
+Si quieres hacer el seguimiento de este proyecto y de las diferentes tareas del backlog lo puedes hacer [aquí](https://github.com/JuanMaRuiz/docker-notes/projects/1)
