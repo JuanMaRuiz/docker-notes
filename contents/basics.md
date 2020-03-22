@@ -12,4 +12,4 @@
 * **Docker image.-** Se podría decir que es la plantilla para la construcción de un contenedor. Es un componente estático que únicamente contiene un SO base y el conjunto de componentes que aportarán funcionalidad.
 * **Docker container.-** Es la instancia de una imagen
 
-👉 [Siguente - Contenedores](containers.md) | 📖[Volver al índice](../README.md)
+📖[Volver al índice](../README.md) | 👉 [Siguente - Contenedores](containers.md) |
