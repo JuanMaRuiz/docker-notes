@@ -1,6 +1,6 @@
 ## Volúmenes
 
-Los volúmenes son el mecanismo preferido para la persistencia de datos, por ejemplo cuando se quieren persistir datos en disco como los de una base de datos.
+Los volúmenes se utilizan para almacenar y compartir datos (información) entre el host y el contenedor de manera independiente a la vida del contenedor. son el mecanismo preferido para la persistencia de datos. Por ejemplo, cuando se quieren persistir datos en disco como los de una base de datos.
 
 Los volúmenes representan una mejor opción a la persistencia de datos en una capa de un contenedor por varias razones:
 
@@ -12,17 +12,15 @@ Para almacenar datos Docker nos permite:
 * Utilizar volúmenes.
 * Utilizar contenedores como volúmenes.
 
-Como hemos dicho anteriormente volúmenes se utilizan para almacenar y compartir datos (información) entre el host y el contenedor de manera independiente a la vida del contenedor.
-
 Además éstos, los volúmenes, nos facilitan el intercambio de datos entre contenedores, o, que 2 o más contenedores, puedan utilizar la misma fuente de datos.
 
-Los volúmenes no son más que directorios en el host que tienen su réplica en el contenedor.
+Pero ¿qué son los volúmenes? Los **volúmenes** no son más que **directorios en el host que tienen su réplica en el contenedor**.
 
 En el caso de que el directorio que se monte como volúmen ya existiera en el contenedor, su contenido no sería eliminado.
 
 Docker provee de una serie de drivers que permiten la integración de un volumen con servicios de almacenamiento en la nube como Azure FileSystem, S3 de Amazon, IPFS, ...
 
-El driver que utilizar Docker por defecto es el local que permite el uso del propio filesystem del host como volumen.
+El driver que utiliza Docker por defecto es el local que permite el uso del propio filesystem del host como volumen.
 
 Cada volumen es identificado con una etiqueta. No es necesario especificar un path en el SO host ya que Docker posee una zona específica donde crea todos los volúmenes dentro del filesystem del host. Dicha zona es diferente dependiendo del SO del host.
 
@@ -51,9 +49,9 @@ Deberías ver algo parecido a esto:
 
 > Si al lanzar el comando `docker volume ls` observaras un sin fin de volúmenes no te asustes, Docker crea volúmenes temporales al construir los contenedores. Para borrar dichos volúmenes basta con que lances el comando `docker volume prune` y confirmar la acción.
 
-Los volúmenes, al igual que los contenedores y las imágenes, pueden inspeccionarse. En este caso debes usar el comando `docker volume inspect [nombre-volumen]`. En nuestro ejemplo sería `[nombre-volumen]` `data`. 
+Los volúmenes, al igual que los contenedores y las imágenes, pueden inspeccionarse. En este caso debes usar el comando `docker volume inspect [nombre-volumen]`. En nuestro ejemplo sería `[nombre-volumen]` `data`.
 
-Se puede realizar la creación de un volumen de manera manual y posteriormente (al hacer el run del contenedor) asociarlo a un directorio dentro del contenedor. 
+Se puede realizar la creación de un volumen de manera manual y posteriormente (al hacer el run del contenedor) asociarlo a un directorio dentro del contenedor.
 
 Con el fin de comprobar cómo funcionan los volúmenes vamos a realizar lo siguiente:
 
@@ -77,7 +75,7 @@ Una vez creado el contenedor accedemos a él y creamos una base datos dentro del
 $ docker exec -it my-sql-data mysql -p
 ```
 
-Con este comando lo que estamos diciendo es que queremos ejecutar `exec` de manera interactiva `-it` en el contenedor `my-sql-data` el comando `un comando` con la password `-p`.
+Con este comando lo que estamos diciendo es que queremos ejecutar `exec` de manera interactiva `-it` en el contenedor `my-sql-data` el comando `mysql` con la password `-p`.
 
 Debería aparece algo parecido a:
 
@@ -95,9 +93,15 @@ Vamos a crear una nueva base de datos, para ello ejecutamos el comando `CREATE D
 
 ![Database list](./../images/db-list-with-new-db.png)
 
-Una vez creada la base de datos paramos y eliminamos el contenedor `docker stop [my-volume-name]` y `docker rm [my-volume-name]`.
+Una vez creada la base de datos paramos y eliminamos el contenedor:
 
-Confirmamos que el contenedor ya no está corriendo `docker ps` y que tampoco aparece entre el listado de los creados `docker ps -a`.
+```bash
+docker stop [my-volume-name] # Paramos el contenedor
+...
+docker rm [my-volume-name] # Borramos el contenedor
+```
+
+Confirmamos que el contenedor ya no está corriendo con `docker ps` y que tampoco aparece entre el listado de los contenedores creados pero que no están corriendo `docker ps -a`.
 
 Volvemos a crear el contenedor mysql con el script anterior indicando el volumen a utilizar
 
@@ -179,13 +183,13 @@ docker run -d -it -v /dbdata --name dbstore ubuntu /bin/bash
 
 Con este comando creamos un nuevo contenedor `dbstore` partiendo de una máquina ubuntu. Le pasamos los parámetros `-d` para lanzarlo en modo `detached` y `-it` junto con `/bin/bash` para que el contenedor permanezca corriendo.
 
-Una vez lanzado el contenedor, comprobamos que sigue corriendo `docker ps`. Deberías ver algo parecido a esto 
+Una vez lanzado el contenedor, comprobamos que sigue corriendo `docker ps`. Deberías ver algo parecido a esto
 
 ![backup-dbstore](./../images/backup-dbstore.png)
 
 A accedemos al contenedor `docker exec -it dbstore /bin/bash`
 
-Una vez dentro podemos ver que se ha creado la carpeta `dbstore` 
+Una vez dentro podemos ver que se ha creado la carpeta `dbstore`
 
 ![dbdata-folder-in-container](./../images/dbdata-folder-in-container.png)
 
