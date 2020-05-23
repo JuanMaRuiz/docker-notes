@@ -1,8 +1,8 @@
 ## Volúmenes
 
-Los volúmenes se utilizan para almacenar y compartir datos (información) entre el host y el contenedor de manera independiente a la vida del contenedor. son el mecanismo preferido para la persistencia de datos. Por ejemplo, cuando se quieren persistir datos en disco como los de una base de datos.
+Los volúmenes se utilizan para almacenar y compartir datos (información) entre el host y el contenedor de manera independiente a la vida del contenedor e incluso entre dos contenedores. Son el mecanismo preferido para la persistencia de datos ya que ,por ejemplo, nos permiten persistir los datos de una base de datos en disco.
 
-Los volúmenes representan una mejor opción a la persistencia de datos en una capa de un contenedor por varias razones:
+Los volúmenes son la mejor opción a la persistencia de datos por varias razones:
 
 * No incrementan el tamaño del contenedor.
 * No dependen del ciclo de vida del contenedor. Es decir, si el contenedor es destruido los datos almacenados en el volumen no serán destruidos.
@@ -12,7 +12,7 @@ Para almacenar datos Docker nos permite:
 * Utilizar volúmenes.
 * Utilizar contenedores como volúmenes.
 
-Además éstos, los volúmenes, nos facilitan el intercambio de datos entre contenedores, o, que 2 o más contenedores, puedan utilizar la misma fuente de datos.
+Además éstos, los volúmenes, nos facilitan el intercambio de datos entre contenedores, o, que 2 o más contenedores, puedan utilizar la misma fuente de datos. Lo cual es muy útil cuando tienes varios contenedores que necesitan acceder a una base de datos.
 
 Pero ¿qué son los volúmenes? Los **volúmenes** no son más que **directorios en el host que tienen su réplica en el contenedor**.
 
@@ -54,7 +54,7 @@ Los volúmenes, al igual que los contenedores y las imágenes, pueden inspeccion
 Se puede realizar la creación de un volumen de manera manual y posteriormente (al hacer el run del contenedor) asociarlo a un directorio dentro del contenedor.
 
 Con el fin de comprobar cómo funcionan los volúmenes vamos a realizar lo siguiente:
-
+****
 * Creamos un volumen que montaremos (o asociaremos) al contenedor.
 * Nos meteremos dentro del contenedor y crearemos una nueva base de datos.
 * Pararemos y borraremos el contenedor para posteriormente volver a crear otro contenedor de mysql al que le montaremos el volumen que creamos en el paso uno. ¿Para qué? Para comprobar que la base de datos creada en el segundo paso está presente en el nuevo contenedor que hemos creado.
@@ -66,16 +66,28 @@ Creamos un volumen `docker volume create mysql-db-data` y posteriormente verific
 Levantamos nuevamente el contendor de mysql, pero esta vez necesitaremos pasarle más parámetros en la construcción ya que vamos a interactuar con él una vez esté levantado. Le vamos a dar un nombre `--name mysql-db` y le pasaremos la clave para conectar a la bbdd mediante una variable de entorno `-e MYSQL_ROOT_PASSWORD=secret`. Por último, le asociamos el volumen que acabamos de crear para ello le pasamos el flag `mount` con un `src` y `dst`. Donde `src` será el volumen que acabamos de crear y `dst` el directorio dentro del contenedor donde queremos mapear:
 
 ```bash
-$ docker run --name mysql-db -e MYSQL_ROOT_PASSWORD=my-secret-pw -d --mount src=db-data,dst=/var/lib/mysql mysql
+$ docker run --name mysql-db -e MYSQL_ROOT_PASSWORD=my-secret-pw -d --mount src=mysql-db-data,dst=/var/lib/mysql mysql
 ```
+
+Con este comando lo que estamos haciendo es levantar un contenedor con el nombre **mysql-db** (`--name`). La imagen de mysql necesita como argumento la pass del root de la base de datos, eso es lo que estamos haciendo al pasarle por línea de comandos `-e MYSQL_ROOT_PASSWORD=my-secret-pw`. `-e` es la variable de entorno `MYSQL_ROOT_PASSWORD=my-secret-pw`. Con la opción `-d` le decimos que queremos levantar el contenedor en modo _detached_ o en segundo plano. Y con el flag `--mount` le decimos que queremos montar el volúmen que acabamos (`mysql-db-data`) de crear en la ruta del volúmen `/var/lib/mysql mysql` que es ruta por defecto definida por la imagen de mysql donde se guardan las bases de datos.
+
+Hecho esto, comprobamos que nuestro contenedor esté corriendo
+
+```bash
+docker ps
+```
+
+Deberías ver algo así:
+
+![accediendo-contenedor-mysql-con-pass](./../images/docker-mysql-with-volume.png)
 
 Una vez creado el contenedor accedemos a él y creamos una base datos dentro del mismo:
 
 ```bash
-$ docker exec -it my-sql-data mysql -p
+$ docker exec -it mysql-db mysql -p
 ```
 
-Con este comando lo que estamos diciendo es que queremos ejecutar `exec` de manera interactiva `-it` en el contenedor `my-sql-data` el comando `mysql` con la password `-p`.
+Con este comando lo que estamos diciendo es que queremos ejecutar `exec` de manera interactiva `-it` en el contenedor `my-sql-data` el comando `mysql` con la password `-p` (te pedirá la pass tras ejecutar el comando).
 
 Debería aparece algo parecido a:
 
@@ -161,13 +173,15 @@ En el caso de `-v` tendríamos algo así:
 docker run -it --name contenedor2 -v vol1:/data ubuntu bash
 ```
 
-#### Añadir volumen en el Dockerfile
+#### Añadir **volumen** en el Dockerfile
 
 Dentro de las instrucciones que se pueden añadir en el Dockerfile está `VOLUME`. Esta instrucción crea un punto de montaje asociado a un directorio dentro del contenedor. La sintáxis es `VOLUME ["/path-to-volume"]`. Si este path no existe en el contenedor que estás creando, Docker lo hará por ti, en caso contarario simplemente definirá dicho path como volumen.
 
 Si te fijas en la sintáxis, en este caso no se especifica la carpeta del host donde se quiere mapear dicho volumen y no, no puedes lanzar el comando anterior con sólo el `src` y esperar a que Docker mapee el path local con el del contenedor de manera automática...entonces ¿Para qué sirve esta definición en el Dockerfile?
 
-El `Dockerfile` es un manifiesto y como tal debe contener la definición de todo lo que el contenedor va a necesitar, incluido el VOLUMEN (si se quieren persistir datos), el puerto que se expone ... Esto ayudará a su mantenimiento y por su puesto a aquella/s persona/s que se va a encargar de poner en marcha el contenedor. Imaginate el caso anterior, una base de datos, si por alguna razón has de mover el contenedor a otra máquina ¿Cómo podrías saber si el contenedor va a necesitar un volumen y dónde se ha de mapear dicho volumen?
+El `Dockerfile` es un manifiesto y como tal debe contener la definición de todo lo que el contenedor va a necesitar, incluido el **VOLUMEN** (si se quieren persistir datos), el puerto que se expone ´PORT´, ect. Esto ayudará a su mantenimiento y por supuesto a aquella/s persona/s que se va a encargar de poner en marcha el contenedor.
+
+Imaginate el caso anterior, una base de datos, si por alguna razón has de mover el contenedor a otra máquina ¿Cómo podrías saber si el contenedor va a necesitar un volumen y dónde se ha de mapear dicho volumen?
 
 [Aquí](https://stackoverflow.com/questions/40163036/difference-between-volume-declaration-in-dockerfile-and-v-as-docker-run-paramet/#answer-40163757) puedes leer una explicación mejor acerca de qué diferencia el flag `-v` y la definición de `VOLUMEN` en el fichero Dockerfile.
 
