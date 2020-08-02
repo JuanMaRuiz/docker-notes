@@ -78,11 +78,7 @@ $ docker top <contenedor>
 
 **Actualización de la configuración de un contenedor en marcha**
 
-Puede darse el caso en el que necesitemos actualizar la configuración de un contenedor en ejecución, para ello, tenemos el comando:
-
-```bash
-docker update
-```
+Puede darse el caso en el que necesitemos actualizar la configuración de un contenedor en ejecución, para ello, tenemos el comando `docker update`.
 
 A través de este comando podemos cambiar parámetros de un contenedor como, por ejemplo, cambiar la política de reinicio del contenedor:
 
@@ -93,7 +89,7 @@ docker update --restart=on-failure:3 abebf7571666 hopeful_morse
 ## Buenas prácticas con contenedores
 
 * **Una imagen por contenedor**.- La idea es que los contenedores tengan el mismo ciclo de vida que la aplicación que contienen y a la vez que éstos sean efímeros (que podamos destruirlos, levantarlos, levantar varias instancias del mismo contenedor,...).
-* **Agrupar instrucciones** en una misma capa. Cada una de las instrucciones (línea) presentes en el Dockerfile crea una capa de construcción del contenedor. Esto hace que el peso del contenedor sea mayor. Un ejemplo de estas instrucciones (mala práctica) sería:
+* **Agrupar instrucciones** en una misma capa. Cada una de las instrucciones (línea) presentes en el `Dockerfile` crea una capa de construcción del contenedor. Esto hace que el peso del contenedor sea mayor. Un ejemplo de estas instrucciones (mala práctica) sería:
 
 ```
 RUN apt-get update
@@ -118,9 +114,8 @@ docker run -d --read-only nginx
 
 Si el contenedor necesita escribir en el sistema de ficheros, se puede proveer un [volumen](volumes.md) para evitar errores y además, hacer persistente los cambios una vez muera el contenedor.
 
-* **Utilizar imágenes base reducidas**.-
-* **No utilizar la etiqueta `latest`**.- La etiqueta latest es la que se utiliza por defecto, cuando no se especifica ninguna otra etiqueta.
-    ¿Por qué no utilizarla? Porque la etiqueta latest apuntará a una imagen diferente cuando se publique una nueva versión y, por lo tanto, cada vez que realicemos la build de una imagen ésta estaría utilizando una versión diferente lo cual podría tener efectos no deseados.
+* **Utilizar imágenes base reducidas**.
+* **No utilizar la etiqueta `latest`**.- La etiqueta latest es la que se utiliza por defecto, cuando no se especifica ninguna otra etiqueta. ¿Por qué no utilizarla? Porque la etiqueta latest apuntará a una imagen diferente cuando se publique una nueva versión y, por lo tanto, cada vez que realicemos la build de una imagen ésta estaría utilizando una versión diferente lo cual podría tener efectos no deseados.
 
 ### Cache
 
@@ -132,4 +127,4 @@ Aunque esto es muy útil ya que se disminuye el tiempo de construcción de nueva
 docker build --no-cache -t image-name .
 ```
 
-📖[Volver al índice](../README.md) | 👉 [Siguente - Volúmenes](volumes.md)
+📖[Volver a - Principios básicos sobre Docker](basics.md)) | 👉 [Siguente - Volúmenes](volumes.md)
