@@ -5,15 +5,15 @@ Qué vas a encontrar en este proyecto:
 ## [Principios básicos sobre Docker](contents/basics.md)
 
 * Qué es Docker.
-* Componentes de Docker
-  
-## [Contenedores](contents/containers.md)
+* Componentes básicos de Docker
+
+## [Contenedores](contents/images-and-containers.md)
 
 * Definición de contenedores.
 * Comandos básicos
 * Trabajo con contenedores (creación, destrucción, ...).
 * Buenas prácticas.
-  
+
 ## [Volúmenes](contents/volumes.md)
 
 En esta sección se explicará que son los volúmenes, cómo crearlos, cómo definirnos en el `Dockerfile` cómo gestionarlos, la creación de un volumen en el momento de la creación de un contenedor, ...
