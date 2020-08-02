@@ -1,18 +1,52 @@
 ## Imágenes
 
-Básicamente, una imagen es una plantilla que define todo lo que un contenedor va a tener: Sistema Operativo, lenguaje de programación y versión del mismo, ...
+Básicamente, una imagen es una plantilla que define todo lo que un contenedor va a tener: Sistema Operativo, lenguaje de programación y versión del mismo, librerías, instrucciones a ejecutar, ...
 
-Las imágenes, pueden ser:
+Las imágenes, pueden ser de diferentes tipos en función de su visibilidad:
 
-* Públicas => Como aquellas publicadas en Docker Hub.
-* Privadas => Aquellas publicadas en un registro privado de tu empresa en el Docker hub publicadas como no públicas.
-* Locales => Puedes crear tu propia imagen en local usando tu propio `Dockerfile`.
+* **Públicas** => Como aquellas publicadas en Docker Hub.
+* **Privadas** => Aquellas publicadas en un registro privado de tu empresa en el Docker hub publicadas como no públicas.
+* **Locales** => Puedes crear tu propia imagen en local usando tu propio `Dockerfile`.
+
+La definición de una imagen se realiza en un fichero llamado `Dockerfile`.
+
+Ejemplo básico de una imagen Docker (fichero `Dockerfile`):
+
+```
+FROM ubuntu:18.04
+COPY . /app
+RUN make /app
+CMD python /app/app.py
+```
+
+### Instrucciones básicas para el trabajo con imágenes
+
+`docker-cli` nos provee de diferentes comandos para trabajar con imágenes:
+
+* `--all` , `-a`.- Muestra todas las imágenes. Por defecto, las imágenes intermedias no se mostrarán.
+* `--digests`.- Muestra [digests](https://docs.docker.com/engine/reference/commandline/images/#list-image-digests)
+* `--filter` , `-f`.- Filta la salida en función de las condiciones pasadas por línea de comandos.
+* `--format`.- Muestra la salida en el formato deseado utilizando templates de Go.
+* `--no-trunc`.- Muestra la información sin truncar los datos.
+* `--quiet`, `-q`.- Sólo muestra los IDs numéricos de las imágenes
+
+Para ejecutar estos comandos siempre han de ir precedidos de `docker images`. Así, por ejemplo, si lanzáramos el comando `docker images -a` nos mostraría todas las imágenes que tuviéramos en nuestro host.
+
+```bash
+$ docker images -a
+REPOSITORY            TAG                 IMAGE ID            CREATED             SIZE
+mysql                 5.7                 a4fdfd462add        2 months ago        448MB
+mysql                 latest              94dff5fab37f        2 months ago        541MB
+```
+
+Para más información puedes consultar la [documentación oficial sobre imágenes](https://docs.docker.com/engine/reference/commandline/images/)
+
 
 ## Contendores
 
-Un contenedor de Docker es básicamente una instancia de una imagen de Docker. Si la imagen es la plantilla que define cómo está estructurado, qué funcionalidades, software, ... va a tener un contenedor, el contenedor es una instancia construída a partid de dicha plantilla.
+Un contenedor de Docker es básicamente una instancia de una imagen de Docker. Si la imagen es la plantilla que define cómo está estructurado, qué funcionalidades, software, etc. va a tener un contenedor, el contenedor es una instancia construída a partir de dicha plantilla.
 
-Para construir un contenedor puedes utilizar una imagen predefinida que descargues de Docker Hub o del registro de imágenes de tu empresa o una imagen creada por ti. Las imágenes están definidas por el `Dockerfile`
+Para construir un contenedor puedes utilizar una imagen predefinida que descargues de Docker Hub o del registro de imágenes de tu empresa o una imagen creada por ti. Las imágenes están definidas por el `Dockerfile`.
 
 ### Comandos útiles para trabajar con contenedores
 

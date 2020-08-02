@@ -9,6 +9,7 @@ Qué vas a encontrar en este proyecto:
 
 ## [Contenedores](contents/images-and-containers.md)
 
+* Imágenes.
 * Definición de contenedores.
 * Comandos básicos
 * Trabajo con contenedores (creación, destrucción, ...).
