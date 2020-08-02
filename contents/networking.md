@@ -1,6 +1,6 @@
 ## Networking
 
-Docker premite crear redes que faciliten: 
+Docker premite crear redes que faciliten:
 
 * La comunicación de los contenedores con el host.
 * La comuniciación entre los contenedores.
@@ -36,9 +36,9 @@ Deberías ver algo parecido a esto:
 
 ![default-docker-networks](./../images/default-docker-networks.png)
 
-Estas tres 3 las crea Docker por defecto. Y será la red `bridge` la que se utilizará por defecto por todos los contenedores.
+Estas tres redes 3 las crea Docker por defecto. Y será la red `bridge` la que se utilizará por defecto por todos los contenedores.
 
-Si inspeccionamos la red `bridge` aparecerá algo como esto: 
+Si inspeccionamos la red `bridge` aparecerá algo como esto:
 
 ```bash
 [{
@@ -113,4 +113,4 @@ Ahora en la propiedad `Containers` deberían aparecernos los dos contenedores qu
 }]
 ```
 
-📖[Volver al índice](../README.md) | 👉 [Siguente - Docker Compose](docker-compose.md)
+📖[Volver a - Volúmenes](volumes.md) | 👉 [Siguente - Docker Compose](docker-compose.md)

@@ -23,7 +23,3 @@ En esta sección se explicará que son los volúmenes, cómo crearlos, cómo def
 ## [Docker Compose](contents/docker-compose.md)
 ## [Docker Machine](contents/docker-machine.md)
 ## [Docker Swarm](contents/docker-swarm.md)
-
-## Project status
-
-Si quieres hacer el seguimiento de este proyecto y de las diferentes tareas del backlog lo puedes hacer [aquí](https://github.com/JuanMaRuiz/docker-notes/projects/1)
